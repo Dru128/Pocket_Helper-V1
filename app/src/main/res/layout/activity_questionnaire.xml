@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".questionnaireActivity"
+    tools:ignore="ExtraText"
+    android:orientation="vertical">
+
+
+
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="50sp"
+        android:text="Помощ по хозяйству"
+        android:theme="@style/MySwitch" />
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:theme="@style/MySwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="50sp"
+        android:text="Прогулка с питомцем" />
+
+    <CheckBox
+        android:id="@+id/checkBox3"
+        android:theme="@style/MySwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="50sp"
+        android:text="Поход за продуктами" />
+
+    <CheckBox
+        android:id="@+id/checkBox4"
+        android:theme="@style/MySwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="50sp"
+        android:text="Душевное общение" />
+
+    <Button
+        android:id="@+id/otpravit"
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:background="@drawable/mydesign"
+        android:onClick="sendRequest"
+        android:text="отправить"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+</LinearLayout>

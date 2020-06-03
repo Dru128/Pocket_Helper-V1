@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <Button
+        android:id="@+id/newApplication"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/mydesign"
+        android:onClick="sendMessage"
+        android:text="Создать заявку"
+        android:textColor="#ffffff" />
+
+    <Button
+        android:id="@+id/profile"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14sp"
+        android:background="@drawable/mydesign"
+        android:onClick="settingProfile"
+        android:text="Настройки профиля"
+        android:textColor="#ffffff" />
+
+    <Button
+        android:id="@+id/myApplications"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14sp"
+        android:background="@drawable/mydesign"
+        android:text="Заявки"
+        android:textColor="#FFFFFF" />
+
+
+</LinearLayout>

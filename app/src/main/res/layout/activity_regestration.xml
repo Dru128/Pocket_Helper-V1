@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".regestrationActivity"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <EditText
+        android:id="@+id/name"
+        android:hint="Ваше имя"
+        android:layout_width="310sp"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/numberPhone"
+        android:hint="Ваш номер телефона"
+        android:layout_width="310sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14sp"/>
+
+    <EditText
+        android:id="@+id/address"
+        android:hint="Ваш адресс"
+        android:layout_width="310sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14sp"/>
+
+    <Switch
+        android:id="@+id/valonter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Волонтёр"
+        android:layout_marginEnd="104sp"
+        android:theme="@style/MySwitch"
+        android:layout_marginTop="14sp"/>
+
+    <Button
+        android:id="@+id/regestrationButton"
+        android:onClick="regestrationNewProfile"
+        android:text="зарегестрироваться"
+        android:textColor="#ffffff"
+        android:textSize="18dp"
+        android:background="@drawable/mydesign"
+        android:layout_width="310dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="14sp"/>
+
+
+</LinearLayout>
