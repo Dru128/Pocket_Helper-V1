@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".regestrationActivity"></activity>
+        <activity android:name=".requestsActivity"></activity>
+        <activity android:name=".regestrationActivity" />
         <activity android:name=".questionnaireActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

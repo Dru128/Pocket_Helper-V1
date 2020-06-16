@@ -6,47 +6,51 @@
     android:layout_height="match_parent"
     tools:context=".regestrationActivity"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@color/layoutColorBlue">
 
     <EditText
         android:id="@+id/name"
         android:hint="Ваше имя"
         android:layout_width="310sp"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:maxLength="30"/>
 
     <EditText
         android:id="@+id/numberPhone"
         android:hint="Ваш номер телефона"
         android:layout_width="310sp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14sp"/>
+        android:layout_marginTop="14sp"
+        android:inputType="number" />
 
     <EditText
         android:id="@+id/address"
-        android:hint="Ваш адресс"
         android:layout_width="310sp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14sp"/>
+        android:layout_marginTop="14sp"
+        android:hint="Ваш адрес"
+        android:maxLength="40"/>
 
     <Switch
         android:id="@+id/valonter"
-        android:layout_width="wrap_content"
+        android:layout_width="310sp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="14sp"
         android:text="Волонтёр"
-        android:layout_marginEnd="104sp"
-        android:theme="@style/MySwitch"
-        android:layout_marginTop="14sp"/>
+        android:theme="@style/MySwitch" />
 
     <Button
         android:id="@+id/regestrationButton"
         android:onClick="regestrationNewProfile"
         android:text="зарегестрироваться"
         android:textColor="#ffffff"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:background="@drawable/mydesign"
         android:layout_width="310dp"
         android:layout_height="75dp"
         android:layout_marginTop="14sp"/>
+
 
 
 </LinearLayout>

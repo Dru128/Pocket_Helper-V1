@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    android:gravity="center"
     android:orientation="vertical"
-    android:gravity="center">
+    tools:context=".MainActivity"
+    android:background="@color/layoutColorBlue">
 
     <Button
         android:id="@+id/newApplication"
@@ -29,10 +30,12 @@
 
     <Button
         android:id="@+id/myApplications"
+
         android:layout_width="310dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="14sp"
         android:background="@drawable/mydesign"
+        android:onClick="InRequests"
         android:text="Заявки"
         android:textColor="#FFFFFF" />
 

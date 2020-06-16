@@ -10,7 +10,6 @@
         android:startColor="#1E88E5"
         android:type="linear" />
 
-
     <padding
         android:bottom="15dp"
         android:left="15dp"

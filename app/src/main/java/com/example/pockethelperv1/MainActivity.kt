@@ -1,17 +1,17 @@
 package com.example.pockethelperv1
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.View
-
-
-
+import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.FirebaseDatabase
 
 
 class MainActivity : AppCompatActivity()
 {
+
+
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -25,11 +25,9 @@ class MainActivity : AppCompatActivity()
 
     fun sendMessage(v : View)
     {
-        // действия, совершаемые после нажатия на кнопку
         // Создаем объект Intent для вызова новой Activity
         val intent = Intent(this, questionnaireActivity::class.java)
-        // запуск activity
-        startActivity(intent)
+        startActivity(intent)   // запуск activity
     }
 
     fun InRegestration()
@@ -46,13 +44,11 @@ class MainActivity : AppCompatActivity()
         startActivity(intent)   // запуск activity regestration
     }
 
-/*    fun save(v: View)
+    fun InRequests(v: View)
     {
-        val editor = PreferenceManager.getDefaultSharedPreferences(baseContext).edit()
-        editor.putString("aaa", editText.text.toString())
-        editor.commit()
-    }*/
-
+        val intent = Intent(this, requestsActivity::class.java)
+        startActivity(intent)
+    }
 
 
 }

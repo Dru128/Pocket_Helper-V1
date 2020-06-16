@@ -6,38 +6,43 @@
     android:layout_height="match_parent"
     tools:context=".questionnaireActivity"
     tools:ignore="ExtraText"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/layoutColorBlue">
 
+    <RadioGroup
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/RadioGroup">
 
-
-
-    <CheckBox
-        android:id="@+id/checkBox"
+    <RadioButton
+        android:id="@+id/checkBox0"
         android:layout_width="wrap_content"
         android:layout_height="50sp"
         android:text="Помощ по хозяйству"
         android:theme="@style/MySwitch" />
 
-    <CheckBox
+    <RadioButton
         android:id="@+id/checkBox2"
         android:theme="@style/MySwitch"
         android:layout_width="wrap_content"
         android:layout_height="50sp"
         android:text="Прогулка с питомцем" />
 
-    <CheckBox
+    <RadioButton
         android:id="@+id/checkBox3"
         android:theme="@style/MySwitch"
         android:layout_width="wrap_content"
         android:layout_height="50sp"
         android:text="Поход за продуктами" />
 
-    <CheckBox
+    <RadioButton
         android:id="@+id/checkBox4"
         android:theme="@style/MySwitch"
         android:layout_width="wrap_content"
         android:layout_height="50sp"
         android:text="Душевное общение" />
+
+</RadioGroup>
 
     <Button
         android:id="@+id/otpravit"

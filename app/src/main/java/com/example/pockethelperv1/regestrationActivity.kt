@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.marginEnd
 import kotlinx.android.synthetic.main.activity_regestration.*
 
 @Suppress("DEPRECATION")
