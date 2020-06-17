@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_regestration.*
 @Suppress("DEPRECATION")
 class regestrationActivity : AppCompatActivity()
 {
+//    public data class Anketa(var UID: Int = 0)
 
     override fun onCreate(savedInstanceState: Bundle?)
     {

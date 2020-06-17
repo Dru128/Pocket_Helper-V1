@@ -1,19 +1,19 @@
 package com.example.pockethelperv1
 
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.MenuItem
 import android.view.View
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_questionnaire.*
-import kotlinx.android.synthetic.main.activity_regestration.*
 
 
 @Suppress("DEPRECATION")
@@ -79,12 +79,22 @@ class questionnaireActivity : AppCompatActivity()
 
     fun sendRequest(v : View)
     {
+
+//        val help_index: Int = myGroup.indexOfChild(findViewById(myGroup.checkedRadioButtonId))
+        val checkedRadioButtonId: Int = myGroup.checkedRadioButtonId
+        if (checkedRadioButtonId == -1)
+        {
+            Toast.makeText(applicationContext, "Необходимо выбрать тип помощи!", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         if (PreferenceManager.getDefaultSharedPreferences(baseContext).getBoolean("profile_valonter", false))
         {
             Toast.makeText(applicationContext, "Волонтёр не может размещать заявки!", Toast.LENGTH_SHORT).show()
             return
         }
 
+        val help_view = findViewById<View>(checkedRadioButtonId) as RadioButton
         val profile_name = PreferenceManager.getDefaultSharedPreferences(baseContext).getString("profile_name", "не указано").toString()
         val profile_numberPhone = PreferenceManager.getDefaultSharedPreferences(baseContext).getString("profile_numberPhone", "не указано").toString()
         val profile_address = PreferenceManager.getDefaultSharedPreferences(baseContext).getString("profile_address", "не указано").toString()
@@ -107,7 +117,7 @@ class questionnaireActivity : AppCompatActivity()
         // Создали объект, который будем писать в базу
         val msg : Anketa = Anketa(
             ID = id,
-            help_View = 111,
+            help_View = help_view.text.toString(),
             name = profile_name,
             phone = profile_numberPhone,
             address = profile_address)
@@ -119,7 +129,9 @@ class questionnaireActivity : AppCompatActivity()
         {
             myRef.child("messages").child(key).setValue(msg)
         }
-        Toast.makeText(applicationContext, "Заявка принята!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, "Заявка принята!", Toast.LENGTH_LONG).show()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 
     fun getId() : Int
@@ -129,7 +141,7 @@ class questionnaireActivity : AppCompatActivity()
             if (it.ID > max_id) max_id = it.ID
         }
         max_id++
-    return max_id    //-----------------------------------------------
+    return max_id
     }
 
 

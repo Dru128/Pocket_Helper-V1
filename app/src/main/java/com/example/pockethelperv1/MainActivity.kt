@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.database.FirebaseDatabase
 
 
 class MainActivity : AppCompatActivity()

@@ -12,31 +12,31 @@
     <RadioGroup
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/RadioGroup">
+    android:id="@+id/myGroup">
 
     <RadioButton
         android:id="@+id/checkBox0"
         android:layout_width="wrap_content"
         android:layout_height="50sp"
-        android:text="Помощ по хозяйству"
+        android:text="Помощь по хозяйству"
         android:theme="@style/MySwitch" />
 
     <RadioButton
-        android:id="@+id/checkBox2"
+        android:id="@+id/checkBox1"
         android:theme="@style/MySwitch"
         android:layout_width="wrap_content"
         android:layout_height="50sp"
         android:text="Прогулка с питомцем" />
 
     <RadioButton
-        android:id="@+id/checkBox3"
+        android:id="@+id/checkBox2"
         android:theme="@style/MySwitch"
         android:layout_width="wrap_content"
         android:layout_height="50sp"
         android:text="Поход за продуктами" />
 
     <RadioButton
-        android:id="@+id/checkBox4"
+        android:id="@+id/checkBox3"
         android:theme="@style/MySwitch"
         android:layout_width="wrap_content"
         android:layout_height="50sp"
