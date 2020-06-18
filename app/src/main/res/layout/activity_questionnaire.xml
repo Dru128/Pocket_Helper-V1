@@ -50,7 +50,7 @@
         android:layout_height="80sp"
         android:background="@drawable/mydesign"
         android:onClick="sendRequest"
-        android:text="отправить"
+        android:text="Далее"
         android:textColor="#ffffff"
         android:textSize="20sp" />
 </LinearLayout>

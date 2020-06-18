@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_regestration.*
 @Suppress("DEPRECATION")
 class regestrationActivity : AppCompatActivity()
 {
+    var myhelp = myHelper()
 //    public data class Anketa(var UID: Int = 0)
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -71,17 +72,10 @@ class regestrationActivity : AppCompatActivity()
 
     fun loadProfile()
     {
-        name.setText(PreferenceManager.getDefaultSharedPreferences(baseContext)
-            .getString("profile_name", "не указано"))
-
-        numberPhone.setText(PreferenceManager.getDefaultSharedPreferences(baseContext)
-            .getString("profile_numberPhone", "не указано"))
-
-        address.setText(PreferenceManager.getDefaultSharedPreferences(baseContext)
-            .getString("profile_address", "не указано"))
-
-        valonter.isChecked = PreferenceManager.getDefaultSharedPreferences(baseContext)
-            .getBoolean("profile_valonter", false)
+        name.setText(myhelp.load_Name(baseContext))
+        numberPhone.setText(myhelp.load_Phone(baseContext))
+        address.setText(myhelp.load_address(baseContext))
+        valonter.isChecked = myhelp.load_profile_valonter(baseContext)
     }
 
     fun save_proverkaAkkaunta()

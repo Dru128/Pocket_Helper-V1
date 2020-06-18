@@ -1,30 +1,32 @@
 package com.example.pockethelperv1
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.text.format.DateUtils
 import android.view.MenuItem
 import android.view.View
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_questionnaire.*
+import java.util.*
 
 
 @Suppress("DEPRECATION")
-class questionnaireActivity : AppCompatActivity()
-{
+class questionnaireActivity : AppCompatActivity() {
     var database = FirebaseDatabase.getInstance()
     var myRef = database.reference
     var anketsList: MutableCollection<Anketa> = mutableListOf()
+    var myhelp = myHelper()
+    var dateAndTime = Calendar.getInstance()
+    lateinit var DATA : String
 
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_questionnaire)
 
@@ -32,43 +34,15 @@ class questionnaireActivity : AppCompatActivity()
         actionBar!!.setHomeButtonEnabled(true)
         actionBar.setDisplayHomeAsUpEnabled(true)
 
-        //-----------------------------------------
-        val menuListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                //Очищаем список сообщений
-                anketsList.clear()
-                // Тут происходит МАГИЯ!
-                // Из потока данных, возвращаемых из БД, который есть текстовое представление списка объектов
-                // восстанавливаются объекты типа Message и записываются в список messageList
-                dataSnapshot.children.mapNotNullTo(anketsList) { it.getValue<Anketa>(Anketa::class.java) }
-//                myText.text = ""
-                // Полезная работа - в данном случае, посторочно пишем сообщения в текстбокс
-//                anketsList.forEach {
-//                    myText.append("${it.Author}: ${it.Text}\n")
-//                }
-            }
+        setInitialDateTime()
+        anketsList = myhelp.loadAnkets() //инициализация списка анкет
 
-            override fun onCancelled(databaseError: DatabaseError) {
-                println("loadPost:onCancelled ${databaseError.toException()}")
-            }
-        }
 
-        /**
-         * Подписка на событие изменения списка - добавление листенера
-         * Почитать про листенеры и поэкспериментировать с разными листенерами
-         * они отличаются по событиям: изменение свойств существующего объекта, появление новых
-         * дочерних объектов и т.д.
-         */
-        //myRef.child("messages").addListenerForSingleValueEvent(menuListener)
-        myRef.child("messages").addValueEventListener(menuListener)
-        //------------------------------------------
 
     }
 
-    override fun onOptionsItemSelected(item: MenuItem) : Boolean
-    {
-        return when (item.getItemId())
-        {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.getItemId()) {
             android.R.id.home -> {
                 finish()
                 true
@@ -77,72 +51,96 @@ class questionnaireActivity : AppCompatActivity()
         }
     }
 
-    fun sendRequest(v : View)
+    fun sendRequest(v: View)
     {
+        if (myhelp.load_profile_valonter(baseContext))
+        {
+            Toast.makeText(applicationContext,"Волонтёр не может размещать заявки!", Toast.LENGTH_SHORT).show()
+            return
+        }
 
-//        val help_index: Int = myGroup.indexOfChild(findViewById(myGroup.checkedRadioButtonId))
-        val checkedRadioButtonId: Int = myGroup.checkedRadioButtonId
-        if (checkedRadioButtonId == -1)
+        val help_index: Int = myGroup.indexOfChild(findViewById(myGroup.checkedRadioButtonId))
+        if (help_index == -1)
         {
             Toast.makeText(applicationContext, "Необходимо выбрать тип помощи!", Toast.LENGTH_SHORT).show()
             return
         }
 
-        if (PreferenceManager.getDefaultSharedPreferences(baseContext).getBoolean("profile_valonter", false))
+        if (myhelp.load_address(baseContext) == "" || myhelp.load_Name(baseContext) == "" || myhelp.load_Phone(baseContext) == "")
         {
-            Toast.makeText(applicationContext, "Волонтёр не может размещать заявки!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext,"Пожалуйста закончите регистрацию!", Toast.LENGTH_SHORT).show()
             return
         }
 
+        DatePickerDialog(
+            this@questionnaireActivity, dataListener,
+            dateAndTime[Calendar.YEAR],
+            dateAndTime[Calendar.MONTH],
+            dateAndTime[Calendar.DAY_OF_MONTH]
+        ).show()
+        Toast.makeText(applicationContext,"Выберете Дату, когда к вам должен зайти валантёр!", Toast.LENGTH_LONG).show()
+    }
+
+
+    // установка начальных даты и времени
+    private fun setInitialDateTime()
+    {
+        DATA = DateUtils.formatDateTime(
+            this,
+            dateAndTime.timeInMillis,
+            DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_YEAR
+                    or DateUtils.FORMAT_SHOW_TIME
+        )
+    }
+
+    // установка обработчика выбора времени
+    var timeListener =
+        TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+            dateAndTime[Calendar.HOUR_OF_DAY] = hourOfDay
+            dateAndTime[Calendar.MINUTE] = minute
+            setInitialDateTime()    //  Запись даты в текст
+
+            //  Если до сюда дойдёт, то дата и время выбраны и нужно будет сохранить дату -----------------------------------------------------------------------------------------------
+            sendAnketa() // вызов процедуры, которая собираетобъект <Анкета> и отправляет на сервер (базу данных)
+        }
+
+    // установка обработчика выбора даты
+    var dataListener =
+        DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+            dateAndTime[Calendar.YEAR] = year
+            dateAndTime[Calendar.MONTH] = monthOfYear
+            dateAndTime[Calendar.DAY_OF_MONTH] = dayOfMonth
+
+//  Выбор времени, если в диалоговом окне "Дата" была нажата кнопка "OK"
+            TimePickerDialog(
+                this@questionnaireActivity, timeListener,
+                dateAndTime[Calendar.HOUR_OF_DAY],
+                dateAndTime[Calendar.MINUTE], true
+            ).show()
+
+            Toast.makeText(applicationContext,"Выберете время, в которое к вам должен зайти валантёр!", Toast.LENGTH_LONG).show()
+
+        }
+
+    fun sendAnketa()
+    {
+        val id: Int = myhelp.getID()    //  id анкеты
+        val checkedRadioButtonId: Int = myGroup.checkedRadioButtonId
         val help_view = findViewById<View>(checkedRadioButtonId) as RadioButton
-        val profile_name = PreferenceManager.getDefaultSharedPreferences(baseContext).getString("profile_name", "не указано").toString()
-        val profile_numberPhone = PreferenceManager.getDefaultSharedPreferences(baseContext).getString("profile_numberPhone", "не указано").toString()
-        val profile_address = PreferenceManager.getDefaultSharedPreferences(baseContext).getString("profile_address", "не указано").toString()
 
-        if (profile_name == "" || profile_numberPhone == "" || profile_address == "")
-        {
-            Toast.makeText(applicationContext, "Пожалуйста закончите регистрацию!", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val numberHelp = 1//--------------------------------------
-        val id : Int = getId()    //  id анкеты
-//        val text : String = a + "\n" + b + "\n" + c + "\n" + numberHelp
-
-
-
-        //----------------------------------------------------
-
-        // Сохранение в БД
-        // Создали объект, который будем писать в базу
-        val msg : Anketa = Anketa(
+        val anket: Anketa = Anketa(
             ID = id,
             help_View = help_view.text.toString(),
-            name = profile_name,
-            phone = profile_numberPhone,
-            address = profile_address)
+            name = myhelp.load_Name(baseContext),
+            phone = myhelp.load_Phone(baseContext),
+            address = myhelp.load_address(baseContext),
+            dataAndTime = DATA
+        )
 
-        // Записали пустой дочерний узел и получили ключ
-        val key = myRef.child("messages").push().key
-        // Если узел создался, то находим его по ключу и присваиваем ему нащ объект
-        if (key != null)
-        {
-            myRef.child("messages").child(key).setValue(msg)
-        }
+        myhelp.saveAnket(anket)
+
         Toast.makeText(applicationContext, "Заявка принята!", Toast.LENGTH_LONG).show()
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
-
-    fun getId() : Int
-    {
-    var max_id : Int = 0
-        anketsList.forEach{
-            if (it.ID > max_id) max_id = it.ID
-        }
-        max_id++
-    return max_id
-    }
-
-
 }

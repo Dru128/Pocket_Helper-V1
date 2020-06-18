@@ -7,5 +7,6 @@ package com.example.pockethelperv1
     var help_View:String = "",
     var name:String = "",
     var phone:String = "",
-    var address:String = ""
+    var address:String = "",
+    var dataAndTime:String = ""
     )
